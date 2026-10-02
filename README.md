@@ -67,11 +67,11 @@ To run the narrative generator, set your free-tier Google AI Studio API key (nev
 - macOS/Linux: `export GEMINI_API_KEY="your-key-here"`
 - Windows PowerShell: `$env:GEMINI_API_KEY="your-key-here"`
 
-You can optionally override the default model (`gemini-2.5-flash-lite`) and set a fallback model:
-- macOS/Linux: `export GEMINI_MODEL="gemini-2.5-flash"` and `export GEMINI_FALLBACK_MODEL="gemini-2.5-flash-lite"`
-- Windows PowerShell: `$env:GEMINI_MODEL="gemini-2.5-flash"` and `$env:GEMINI_FALLBACK_MODEL="gemini-2.5-flash-lite"`
+You can optionally override the default model (`gemini-3.5-flash-lite`) and set a fallback model:
+- macOS/Linux: `export GEMINI_MODEL="gemini-2.5-flash"` and `export GEMINI_FALLBACK_MODEL="gemini-3.5-flash-lite"`
+- Windows PowerShell: `$env:GEMINI_MODEL="gemini-2.5-flash"` and `$env:GEMINI_FALLBACK_MODEL="gemini-3.5-flash-lite"`
 
-*(Note: The provided `narrator/sample_output.txt` was generated using the `gemini-2.5-flash-lite` model.)*
+*(Note: The provided `narrator/sample_output.txt` was regenerated using the `gemini-3.5-flash-lite` model.)*
 
 Run with Gemini:
 ```bash

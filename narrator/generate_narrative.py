@@ -49,7 +49,7 @@ def generate_scr_narrative(findings):
     if not api_key:
         return generate_scr_narrative_offline(findings)
     
-    model_name = os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash-lite')
+    model_name = os.environ.get('GEMINI_MODEL', 'gemini-3.5-flash-lite')
     fallback_model = os.environ.get('GEMINI_FALLBACK_MODEL')
     
     try:
