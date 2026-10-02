@@ -68,7 +68,7 @@ To run the narrative generator, set your free-tier Google AI Studio API key (nev
 - Windows PowerShell: `$env:GEMINI_API_KEY="your-key-here"`
 
 You can optionally set the model:
-`export GEMINI_MODEL="gemini-2.5-flash"`
+`export GEMINI_MODEL="gemini-3.8-flash"`
 
 Run with Gemini:
 ```bash
@@ -94,11 +94,11 @@ python narrator/generate_narrative.py --offline
 ## Numeric Accuracy Check
 | Metric | Source Value | Status | Gemini Sample |
 | :--- | :--- | :--- | :--- |
-| Cleaned Total Revenue | 97358.30 | PASS | pending |
-| COD Return Rate | 44.4% | PASS | pending |
-| Highest-Risk Segment Rate | 54.5% | PASS | pending |
-| Duplicate Delta | 2501.90 | PASS | pending |
-| Peak Month Name & Revenue | March 2026, 20318.90 | PASS | pending |
+| Cleaned Total Revenue | 97358.30 | PASS | PASS |
+| COD Return Rate | 44.4% | PASS | PASS |
+| Highest-Risk Segment Rate | 54.5% | PASS | PASS |
+| Duplicate Delta | 2501.90 | PASS | PASS |
+| Peak Month Name & Revenue | March 2026, 20318.90 | PASS | PASS |
 
 ## Design Decisions
 - **temperature=0.0**: Used because this is a factual business report requiring deterministic logic, not creative writing.
