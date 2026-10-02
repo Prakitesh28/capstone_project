@@ -1,11 +1,8 @@
 **Situation**
-
-Mamaearth's financial performance for the period ending March 2026 shows a Cleaned Total Revenue of INR 97,358.30. This figure represents our accurate revenue after accounting for various adjustments. Our operational focus remains on maximizing profitability and ensuring accurate financial reporting across all regions.
+Regional operations and finance teams reviewed the latest business performance metrics. Cleaned Total Revenue closed at INR 97,358.30, compared to a Raw Total Revenue of INR 99,860.20, creating a Duplicate Reconciliation Delta of INR 2,501.90. True peak performance occurred in March 2026 with revenue of INR 20,318.90.
 
 **Complication**
-
-A significant complication arises from a Duplicate Reconciliation Delta of INR 2,501.90, which inflated our Raw Total Revenue to INR 99,860.20. Furthermore, return rates vary considerably by payment method, with COD exhibiting a concerning 44.4% return rate. The highest-risk segment is COD in Tier 2 cities, experiencing a substantial 54.5% return rate. January 2026, an Outlier-Inflated Month, reported an apparent revenue of INR 29,582.10, but its corrected revenue is only INR 11,637.10, highlighting a significant discrepancy.
+Data discrepancies and elevated product returns threaten regional profitability. January 2026 had an apparent revenue of INR 29,582.10, but its corrected revenue is INR 11,637.10 due to outlier distortion. Furthermore, return rates vary heavily across payment methods, recorded at 14.7% for CARD, 44.4% for COD, and 18.9% for UPI. The Highest-Risk Segment is COD in Tier 2 with a 54.5% return rate.
 
 **Resolution**
-
-To address these issues, we must implement a robust reconciliation process to eliminate the Duplicate Reconciliation Delta. A targeted strategy to reduce COD return rates, particularly in Tier 2 cities, is paramount. This includes investigating the root causes of high returns in this segment and potentially adjusting payment options or implementing stricter verification for COD orders. By focusing on these areas, we can ensure our True Peak Month revenue, such as the INR 20,318.90 recorded in March 2026, accurately reflects our operational efficiency and financial health.
+To safeguard margins, operations and finance must immediately tighten reconciliation protocols to manage the Duplicate Reconciliation Delta of INR 2,501.90 and address outlier distortions like the one seen in January 2026. Leadership should also restrict high-risk cash-on-delivery models, specifically targeting the Highest-Risk Segment of COD in Tier 2 with its 54.5% return rate, while pivoting incentives toward lower-risk payment channels.
