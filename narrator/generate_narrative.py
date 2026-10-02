@@ -50,10 +50,13 @@ def generate_scr_narrative(findings):
         return generate_scr_narrative_offline(findings)
     
     model_name = os.environ.get('GEMINI_MODEL', 'gemini-2.5-flash')
+    fallback_model = os.environ.get('GEMINI_FALLBACK_MODEL')
     
     try:
         from google import genai
         from google.genai import types
+        import time
+        import random
         
         client = genai.Client(api_key=api_key, http_options=types.HttpOptions(timeout=30000))
         system_instruction = build_system_instruction()
@@ -67,26 +70,75 @@ def generate_scr_narrative(findings):
             max_output_tokens=2048
         )
         
-        response = client.models.generate_content(
-            model=model_name,
-            contents=user_prompt,
-            config=config
-        )
-        
-        text = response.text
-        if not text:
-            raise ValueError("Empty response text from Gemini API")
+        def attempt_call(model, is_fallback=False):
+            max_attempts = 1 if is_fallback else 4
+            base_delay = 2.0
             
-        tokens = None
-        if hasattr(response, 'usage_metadata') and response.usage_metadata:
-            tokens = response.usage_metadata.total_token_count
-            
-        return {
-            "status": "success",
-            "narrative": text,
-            "tokens": tokens,
-            "source": "gemini"
-        }
+            for attempt in range(1, max_attempts + 1):
+                try:
+                    response = client.models.generate_content(
+                        model=model,
+                        contents=user_prompt,
+                        config=config
+                    )
+                    text = response.text
+                    if not text:
+                        raise ValueError("Empty response text from Gemini API")
+                        
+                    tokens = None
+                    if hasattr(response, 'usage_metadata') and response.usage_metadata:
+                        tokens = response.usage_metadata.total_token_count
+                        
+                    return {
+                        "status": "success",
+                        "narrative": text,
+                        "tokens": tokens,
+                        "source": "gemini"
+                    }
+                except Exception as e:
+                    status_code = None
+                    # Attempt to extract HTTP status code from google-genai APIError or string
+                    if hasattr(e, 'code'):
+                        status_code = getattr(e, 'code')
+                    elif hasattr(e, 'response') and hasattr(e.response, 'status_code'):
+                        status_code = getattr(e.response, 'status_code')
+                    else:
+                        err_str = str(e)
+                        if '503' in err_str: status_code = 503
+                        elif '429' in err_str: status_code = 429
+                        elif '404' in err_str: status_code = 404
+                        elif '403' in err_str: status_code = 403
+                        elif '401' in err_str: status_code = 401
+                        elif 'timeout' in err_str.lower(): status_code = 408
+                    
+                    if status_code in [401, 403, 404]:
+                        # Fail fast for auth errors or model not found
+                        raise e
+                    
+                    is_transient = status_code in [503, 429, 408] or 'timeout' in str(e).lower()
+                    
+                    if is_transient and attempt < max_attempts:
+                        delay = base_delay * (2 ** (attempt - 1))
+                        jitter = random.uniform(0, 0.5)
+                        wait_time = delay + jitter
+                        err_name = status_code if status_code else "timeout/transient error"
+                        print(f"Attempt {attempt}/{max_attempts} after {err_name}, waiting {wait_time:.1f}s...")
+                        time.sleep(wait_time)
+                    else:
+                        raise e
+                        
+        try:
+            return attempt_call(model_name, is_fallback=False)
+        except Exception as e:
+            if fallback_model:
+                print(f"Primary model {model_name} failed. Trying fallback model {fallback_model}...")
+                try:
+                    return attempt_call(fallback_model, is_fallback=True)
+                except Exception as fb_e:
+                    raise fb_e
+            else:
+                raise e
+
     except Exception as e:
         offline_result = generate_scr_narrative_offline(findings)
         offline_result["message"] = f"Fell back to offline mode due to error: {str(e)}"
